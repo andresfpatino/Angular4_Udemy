@@ -1,0 +1,100 @@
+
+<h3 style="color:blue;"> {{titulo}} </h3>
+<strong>Empleado del mes:</strong>
+<br>
+<br>
+
+<!-- Directiva ngIf es un if normal de javascript-->
+<div *ngIf="trabajador_externo == true">
+	<button (click)="cambiarExterno(false)">Mostrar empleado</button>	
+	<ul>
+		<li><strong>Nombre:</strong> {{trabajadores[0].nombre}} </li>
+		<li><strong>Edad:</strong> {{trabajadores[0].edad}}</li>
+		<li><strong>Cargo:</strong> {{trabajadores[0].cargo}} </li>
+		<li *ngIf="trabajadores[0].contratado == true"><strong>Estado:</strong> Está contratado</li>
+		<li *ngIf="trabajadores[0].contratado == false"><strong>Estado:</strong> NO Está contratado</li>
+	</ul>	
+</div>
+
+<div *ngIf="trabajador_externo == false">
+	<button (click)="cambiarExterno(true)">Mostrar trabajador</button>
+	<ul>
+		<li><strong>Nombre:</strong> {{empleado.nombre}} </li>
+		<li><strong>Edad:</strong> {{empleado.edad}}</li>
+		<li><strong>Cargo:</strong> {{empleado.cargo}} </li>
+		<li *ngIf="empleado.contratado == true"><strong>Estado:</strong> Está contratado</li>
+		<li *ngIf="empleado.contratado == false"><strong>Estado:</strong> NO Está contratado</li>
+	</ul>	
+</div>
+
+<hr>
+
+<h3>Listado de Empleados</h3>
+<ul>
+	<!-- La Directiva ngFor permite hacer bucles en las vistas-->
+	<li *ngFor="let empleado of trabajadores; let i = index">
+	<strong>Empleado: {{i+1}}</strong>
+		<ul>
+			<li><strong>Nombre:</strong> {{empleado.nombre}} </li>
+			<li><strong>Edad:</strong> {{empleado.edad}}</li>
+			<li><strong>Cargo:</strong> {{empleado.cargo}} </li>
+			<li *ngIf="empleado.contratado == true"><strong>Estado:</strong> Está contratado</li>
+			<li *ngIf="empleado.contratado == false"><strong>Estado:</strong> NO Está contratado</li>
+		</ul>
+	</li>
+</ul>
+
+<hr>
+
+<!--
+La directiva ngSwich para cambio de etiquetas
+La directiva ngStyle permite colocar   estilos determinados
+-->
+<h3>Colores Swich</h3>
+<ul [ngSwitch]="color">
+	<li *ngSwitchCase="'red'" [ngStyle]="{
+		'background': color,
+		'color' : 'white',
+		'padding' : '20px'
+	}">
+	Es de color ROJO
+	</li>
+	<li *ngSwitchCase="'green'" [ngStyle]="{
+		'background': color,
+		'color' : 'white',
+		'padding' : '20px'
+	}">
+	Es de color VERDE
+	</li>
+	<li *ngSwitchCase="'blue'" [ngStyle]="{
+		'background': color,
+		'color' : 'white',
+		'padding' : '20px'
+	}">
+	Es de color AZUL
+	</li>
+</ul>
+
+<hr>
+
+<!-- Directiva Two way data binding 
+	IMPORTANTE: TENER IMPORTADO EL FormsModule EN EL ARCHIVO app.modules.ts
+-->
+<h3>Selector de colores:</h3>
+<input type="text" [(ngModel)]="color_seleccionado" >
+<button (click)="logColorSeleccionado()"> Mostrar en consola</button>
+<pre 
+	[style.border]="color_seleccionado == 'red' ? '5px solid black' : '1px solid green'"
+	[ngClass] = "{
+		fondoAzul: color_seleccionado == 'blue',
+		fondoVerde: color_seleccionado == 'green',
+		letraGrande: 1 == 1 
+	}"
+>
+	<strong>Color elegido:</strong> 
+	{{color_seleccionado}} 
+</pre>
+<div [ngStyle]="{'background':color_seleccionado,'width':'100px','height':'100px'}"></div>
+<div style="clear:both;"></div>
+
+
